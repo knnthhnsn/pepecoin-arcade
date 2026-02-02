@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$PEPECOIN Arcade</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="arcade-cabinet">
+        <div id="sticker-container" class="sticker-layer"></div>
+
+        <!-- Marquee / Top -->
+        <div class="marquee">
+            <div class="marquee-text">$PEPECOIN ARCADE</div>
+        </div>
+
+        <div class="monitor-bezel">
+            <div class="screen-container">
+                <div id="lives-display"></div>
+                <div id="score-display">SCORE: <span id="score">0</span></div>
+
+                <!-- UI Overlay -->
+                <div id="ui-layer" class="ui-layer">
+                    <div id="start-screen" class="active">
+                        <h1>$PEPECOIN ARCADE</h1>
+                        <p>CLICK THE COIN TO START</p>
+                        <div id="coin-entry-zone" class="coin-entry-zone">
+                            <img src="../assets/coin/pepecoin.webp" id="pepe-coin" class="draggable-coin"
+                                alt="PepeCoin">
+                            <div class="coin-slot-wrapper">
+                                <div class="coin-slot"></div>
+                                <div class="coin-label">INSERT COIN</div>
+                            </div>
+                        </div>
+                        <div class="controls-hint">WASD / ARROWS TO MOVE <br> B / CLICK TO SHOOT <br> SPACE / W TO JUMP
+                        </div>
+                    </div>
+                    <div id="game-over-screen" class="hidden">
+                        <h1>GAME OVER</h1>
+                        <p>FINAL SCORE: <span id="final-score">0</span></p>
+                        <p class="best-score-label">BEST: <span id="best-score">0</span></p>
+                        <p>PRESS ANY KEY TO RETRY</p>
+                    </div>
+                </div>
+
+                <canvas id="gameCanvas" width="800" height="600"></canvas>
+                <div class="scanlines"></div>
+                <div class="crt-glow"></div>
+                <div class="screen-reflection"></div>
+            </div>
+        </div>
+
+        <!-- Control Panel (Now Inside the Cabinet) -->
+        <div class="control-panel">
+            <div class="buttons-group">
+                <div class="button-area">
+                    <div class="arcade-btn red" id="btn-jump"></div>
+                    <div class="btn-label">JUMP</div>
+                </div>
+                <div class="button-area">
+                    <div class="arcade-btn green" id="btn-shoot"></div>
+                    <div class="btn-label">SHOOT</div>
+                </div>
+            </div>
+
+            <div class="joystick-area">
+                <div class="stick-base"></div>
+                <div class="stick-handle" id="joystick"></div>
+                <div class="btn-label">MOVE</div>
+            </div>
+        </div>
+
+        <div class="brand-logo">$PEPECOIN ARCADE</div>
+
+        <!-- Coin Return / Front Panel Details -->
+        <div class="cabinet-front-details">
+            <div class="coin-return"></div>
+        </div>
+    </div>
+
+    <!-- Extend cabinet bottom -->
+    <div class="cabinet-fill-bottom"></div>
+
+    <script src="game.js"></script>
+</body>
+
+</html>
