@@ -1779,7 +1779,7 @@ input[type="checkbox"]:checked::after {
 
 /* Jackpot Prizes in Payment Overlay */
 .jackpot-prizes {
-    margin: 5px 0;
+    margin: 5px 0 10px 0;
     line-height: 1.5;
 }
 
@@ -1791,6 +1791,7 @@ input[type="checkbox"]:checked::after {
 .prize-header {
     font-size: 9px;
     color: #fff !important;
+    margin-bottom: 5px !important;
 }
 
 .prize-line {
