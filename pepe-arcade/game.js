@@ -848,6 +848,10 @@ window.onload = () => {
         wrapper.style.top = top + (isWall ? 'vh' : '%');
         wrapper.style.transform = `rotate(${rot}deg) scale(${scale})`;
 
+        // Link to basedman.io
+        wrapper.style.cursor = 'pointer';
+        wrapper.onclick = () => window.open('https://basedman.io', '_blank');
+
         // precise shine mask
         const imgSrc = `./assets/cabinet-sticker/${filename}`;
         wrapper.style.setProperty('--sticker-mask', `url(${imgSrc})`);
