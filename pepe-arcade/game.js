@@ -835,45 +835,41 @@ class Game {
                     link.click();
 
                     const text = `I just scored ${this.score} in $PEPECOIN ARCADE! 🐸🕹️\n\nCan you beat my high score? Play now at https://pepecoin-arcade.vercel.app #PEPECOIN #ARCADE #BASED`;
+                    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
 
-                    if (navigator.share && navigator.canShare) {
+                    if (isTouch && navigator.share && navigator.canShare) {
                         const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
                         const file = new File([blob], `pepe-score-${this.score}.png`, { type: 'image/png' });
 
                         if (navigator.canShare({ files: [file] })) {
-                            await navigator.share({ text: text, files: [file] });
-                            return;
+                            try {
+                                await navigator.share({
+                                    text: text,
+                                    files: [file]
+                                });
+                                return; // Success on mobile
+                            } catch (shareErr) {
+                                console.log('Native share cancelled or failed', shareErr);
+                            }
                         }
                     }
 
-                    // Fallback to Clipboard (Desktop)
+                    // Desktop or Mobile Fallback
+                    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+
                     try {
                         if (navigator.clipboard && window.ClipboardItem) {
-                            // Use promise-based ClipboardItem to preserve user gesture
-                            const item = new ClipboardItem({
-                                'image/png': new Promise(async (resolve, reject) => {
-                                    try {
-                                        canvas.toBlob(blob => {
-                                            if (blob) resolve(blob);
-                                            else reject(new Error("Canvas to Blob failed"));
-                                        }, 'image/png');
-                                    } catch (e) { reject(e); }
-                                })
-                            });
-                            await navigator.clipboard.write([item]);
-                            console.log('Successfully copied with promise-based API');
-                        } else {
-                            throw new Error("Clipboard API or ClipboardItem not supported");
+                            const data = [new ClipboardItem({ 'image/png': blob })];
+                            await navigator.clipboard.write(data);
                         }
                     } catch (clipErr) {
-                        console.error('Clipboard failed, trying direct text share:', clipErr);
-                        // If it fails, we still want to open the window
+                        console.error('Clipboard failed:', clipErr);
                     }
 
                     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
 
                     setTimeout(() => {
-                        alert("Score shared! If it didn't attach, just press Paste (Ctrl+V) in your post! 🐸📸✂️");
+                        alert("Screenshot copied! Just press Paste (Ctrl+V) in your post to attach it! 🐸📸✂️");
                     }, 1000);
                 } catch (err) {
                     console.error('Screenshot failed:', err);
