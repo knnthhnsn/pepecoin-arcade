@@ -778,17 +778,22 @@ h1 {
 }
 
 .coin-inserted {
-    animation: coinInsert 0.6s cubic-bezier(0.5, 0, 0.5, 1) forwards !important;
+    animation: coinSlideIntoSlot 0.6s cubic-bezier(0.5, 0, 0.5, 1) forwards !important;
 }
 
-@keyframes coinInsert {
+@keyframes coinSlideIntoSlot {
     0% {
-        transform: translateX(0) scale(1) rotate(0deg);
+        transform: translateX(0) scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: translateX(50px) scale(0.6);
         opacity: 1;
     }
 
     100% {
-        transform: translateX(100px) scale(0.2) rotateY(45deg);
+        transform: translateX(80px) scale(0.2);
         opacity: 0;
     }
 }
