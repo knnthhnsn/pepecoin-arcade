@@ -1117,8 +1117,7 @@ class Game {
                 const btnConnect = document.getElementById('btn-connect');
                 if (btnConnect) btnConnect.classList.remove('hidden');
 
-                const jackpotBox = document.getElementById('jackpot-monitor-box');
-                if (jackpotBox) jackpotBox.classList.remove('hidden');
+                // Jackpot monitor is now always visible
 
                 // Try to auto-connect if they have accounts
                 if (window.ethereum) {
