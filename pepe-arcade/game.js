@@ -810,22 +810,24 @@ class Game {
                 const text = `I just scored ${this.score} in $PEPECOIN ARCADE! 🐸🕹️\n\nCan you beat my high score? Play now at https://pepecoin-arcade.vercel.app #PEPECOIN #ARCADE #BASED`;
                 const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
 
-                // Robust mobile/touch detection
-                const isTouch = ('ontouchstart' in window) ||
+                // Broad detection for anything that feels like a phone/tablet
+                const isMobile = ('ontouchstart' in window) ||
                     (navigator.maxTouchPoints > 0) ||
+                    (window.innerWidth <= 1024) ||
+                    (window.matchMedia("(pointer: coarse)").matches) ||
                     (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
-                // For touch devices, skip the laggy/glitchy screenshot and just share/redirect
-                if (isTouch) {
+                if (isMobile) {
+                    // Try native share first
                     if (navigator.share) {
                         try {
                             await navigator.share({ text: text });
                             return;
                         } catch (e) {
-                            console.log('Native share failed or cancelled');
+                            console.log('Share prompt closed');
                         }
                     }
-                    // Fallback to direct redirect for mobile
+                    // Immediate redirect - no screenshot lag
                     window.location.href = tweetUrl;
                     return;
                 }
