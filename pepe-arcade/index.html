@@ -44,7 +44,15 @@
                         <h1>GAME OVER</h1>
                         <p>FINAL SCORE: <span id="final-score">0</span></p>
                         <p class="best-score-label">BEST: <span id="best-score">0</span></p>
-                        <p>PRESS ANY KEY TO RETRY</p>
+                        <p class="retry-hint desktop-only">PRESS ANY KEY TO RETRY</p>
+                        <div class="retry-coin-area touch-only">
+                            <p>INSERT COIN TO RETRY</p>
+                            <div class="retry-coin-wrapper">
+                                <img src="./assets/coin/pepecoin.webp" id="retry-coin" class="retry-coin"
+                                    alt="Insert Coin">
+                                <div class="retry-coin-slot"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 

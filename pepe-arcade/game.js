@@ -756,6 +756,34 @@ class Game {
         document.getElementById('final-score').innerText = this.score;
         document.getElementById('best-score').innerText = this.bestScore;
         document.getElementById('game-over-screen').classList.remove('hidden');
+
+        // Setup retry coin interaction
+        const retryCoin = document.getElementById('retry-coin');
+        if (retryCoin) {
+            retryCoin.classList.remove('inserting');
+
+            const handleCoinInsert = (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+
+                // Play coin insert animation
+                retryCoin.classList.add('inserting');
+                this.audio.playTone(400, 'sine', 0.1); // Coin sound
+
+                // Wait for animation then restart
+                setTimeout(() => {
+                    document.getElementById('game-over-screen').classList.add('hidden');
+                    retryCoin.classList.remove('inserting');
+                    this.resetGame();
+                    this.state = 'PLAYING';
+                    document.getElementById('start-screen').classList.remove('active');
+                }, 600);
+            };
+
+            // Remove old listeners and add new ones
+            retryCoin.onclick = handleCoinInsert;
+            retryCoin.ontouchstart = handleCoinInsert;
+        }
     }
 
     checkAABB(a, b) {
