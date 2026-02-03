@@ -307,11 +307,6 @@ h1 {
 
     0%,
     100% {
-        transform: rotate(0deg) scale(1);
-    }
-
-    0%,
-    100% {
         transform: translateX(0) scale(1);
     }
 
