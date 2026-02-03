@@ -817,16 +817,20 @@ class Game {
                 btnShare.innerText = 'CAPTURING...';
                 btnShare.style.opacity = '0.5';
                 btnShare.style.pointerEvents = 'none';
+                document.body.classList.add('screenshot-mode');
 
                 try {
-                    await new Promise(r => setTimeout(r, 100));
+                    await new Promise(r => setTimeout(r, 200));
 
                     const canvas = await html2canvas(document.body, {
                         backgroundColor: '#1a1a1a',
                         useCORS: true,
-                        scale: 1,
+                        scale: window.devicePixelRatio > 1 ? 2 : 1, // Higher res
                         logging: false
                     });
+
+                    // Remove class immediately after capture
+                    document.body.classList.remove('screenshot-mode');
 
                     // 1. Download backup for everyone
                     const link = document.createElement('a');

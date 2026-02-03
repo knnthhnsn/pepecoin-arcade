@@ -94,8 +94,7 @@ body {
 }
 
 .sticker-wrapper:hover {
-    /* transform: scale(1.5) rotate(5deg); Removed to keep stickers behind cabinet */
-    /* z-index: 100 !important; Removed to keep stickers behind cabinet */
+    filter: brightness(1.1);
 }
 
 .sticker-wrapper:hover .sticker {
@@ -1566,4 +1565,45 @@ input[type="checkbox"]:checked::after {
     background: #fff;
     color: #000;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+/* Screenshot Mode Fixes */
+.screenshot-mode .control-panel {
+    transform: none !important;
+    perspective: none !important;
+    margin-top: 0 !important;
+    transition: none !important;
+}
+
+.screenshot-mode .arcade-btn {
+    box-shadow: none !important;
+    border-bottom: 8px solid #222 !important;
+}
+
+.screenshot-mode .stick-base {
+    box-shadow: none !important;
+    background: #111 !important;
+}
+
+.screenshot-mode .scanlines,
+.screenshot-mode .crt-glow,
+.screenshot-mode .screen-reflection {
+    opacity: 0.1 !important;
+    /* Dim effects for cleaner capture */
+}
+
+.screenshot-mode .share-btn {
+    display: none !important;
+}
+
+.screenshot-mode #game-over-screen {
+    background: rgba(0, 0, 0, 0.8) !important;
+}
+
+.screenshot-mode .sticker-wrapper {
+    transition: none !important;
+}
+
+.screenshot-mode .arcade-cabinet {
+    transform: none !important;
 }
