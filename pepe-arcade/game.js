@@ -688,10 +688,7 @@ class Game {
         }
 
         if (this.state === 'GAMEOVER') {
-            if (anyInput) {
-                this.resetGame();
-                this.startGame();
-            }
+            // No longer checking anyInput here - restart is handled by coin insert only
             return;
         }
         if (this.state === 'PLAYING') {
