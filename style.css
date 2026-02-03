@@ -1794,7 +1794,7 @@ input[type="checkbox"]:checked::after {
 }
 
 .prize-total {
-    color: #00ffff;
+    color: #ffd700;
     font-size: 8px;
 }
 
@@ -1804,12 +1804,12 @@ input[type="checkbox"]:checked::after {
 }
 
 .prize-2nd {
-    color: #c0c0c0;
+    color: #ffd700;
     font-size: 7px;
 }
 
 .prize-3rd {
-    color: #cd7f32;
+    color: #ffd700;
     font-size: 7px;
 }
 
