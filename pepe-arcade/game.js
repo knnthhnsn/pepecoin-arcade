@@ -835,31 +835,46 @@ class Game {
                     link.click();
 
                     const text = `I just scored ${this.score} in $PEPECOIN ARCADE! 🐸🕹️\n\nCan you beat my high score? Play now at https://pepecoin-arcade.vercel.app #PEPECOIN #ARCADE #BASED`;
-                    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-                    const file = new File([blob], `pepe-score-${this.score}.png`, { type: 'image/png' });
 
-                    // 2. Share Logic
-                    if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
-                        // Native Share (Mobile: bypasses popup blocker & attaches image)
-                        await navigator.share({
-                            text: text,
-                            files: [file]
-                        });
-                    } else {
-                        // Desktop/Fallback: Copy to Clipboard + Twitter Intent
-                        try {
-                            if (navigator.clipboard && window.ClipboardItem) {
-                                const data = [new ClipboardItem({ 'image/png': blob })];
-                                await navigator.clipboard.write(data);
-                            }
-                        } catch (e) { console.error('Clip error:', e); }
+                    if (navigator.share && navigator.canShare) {
+                        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                        const file = new File([blob], `pepe-score-${this.score}.png`, { type: 'image/png' });
 
-                        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
-
-                        setTimeout(() => {
-                            alert("Screenshot copied! Just press Paste in your post to attach it! 🐸📸✂️");
-                        }, 1000);
+                        if (navigator.canShare({ files: [file] })) {
+                            await navigator.share({ text: text, files: [file] });
+                            return;
+                        }
                     }
+
+                    // Fallback to Clipboard (Desktop)
+                    try {
+                        if (navigator.clipboard && window.ClipboardItem) {
+                            // Use promise-based ClipboardItem to preserve user gesture
+                            const item = new ClipboardItem({
+                                'image/png': new Promise(async (resolve, reject) => {
+                                    try {
+                                        canvas.toBlob(blob => {
+                                            if (blob) resolve(blob);
+                                            else reject(new Error("Canvas to Blob failed"));
+                                        }, 'image/png');
+                                    } catch (e) { reject(e); }
+                                })
+                            });
+                            await navigator.clipboard.write([item]);
+                            console.log('Successfully copied with promise-based API');
+                        } else {
+                            throw new Error("Clipboard API or ClipboardItem not supported");
+                        }
+                    } catch (clipErr) {
+                        console.error('Clipboard failed, trying direct text share:', clipErr);
+                        // If it fails, we still want to open the window
+                    }
+
+                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+
+                    setTimeout(() => {
+                        alert("Score shared! If it didn't attach, just press Paste (Ctrl+V) in your post! 🐸📸✂️");
+                    }, 1000);
                 } catch (err) {
                     console.error('Screenshot failed:', err);
                     alert("Capture failed, but you can still share your score!");
