@@ -633,6 +633,7 @@ class Game {
     }
 
     shakeHearts() {
+        console.log("SHAKING HEARTS!");
         const hearts = document.querySelectorAll('.heart-icon');
         hearts.forEach(heart => {
             heart.classList.remove('shake');
