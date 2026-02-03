@@ -1549,3 +1549,21 @@ input[type="checkbox"]::after {
 input[type="checkbox"]:checked::after {
     left: 21px;
 }
+
+.share-btn {
+    background: #000;
+    color: #fff;
+    border: 2px solid #fff;
+    padding: 10px 20px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.share-btn:hover {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}

@@ -802,6 +802,15 @@ class Game {
             coin.onclick = handleCoinInsert(coin);
             coin.ontouchstart = handleCoinInsert(coin);
         });
+
+        // Share logic
+        const btnShare = document.getElementById('btn-share');
+        if (btnShare) {
+            btnShare.onclick = () => {
+                const text = `I just scored ${this.score} in $PEPECOIN ARCADE! 🐸🕹️\n\nCan you beat my high score? Play now at https://pepecoin-arcade.vercel.app #PEPECOIN #ARCADE #BASED`;
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
+            };
+        }
     }
 
     checkAABB(a, b) {
