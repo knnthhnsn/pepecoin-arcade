@@ -1159,8 +1159,50 @@ class Game {
 
             const count = await pubContract.gameCount();
             poolLabel.innerText = count.toString();
+
+            // Also update global monitor
+            this.updateGlobalMonitor(pubContract);
         } catch (err) {
             console.log("No contract deployed yet or error fetching count.");
+        }
+    }
+
+    async updateGlobalMonitor(contract) {
+        const list = document.getElementById('global-rank-list');
+        if (!list) return;
+
+        try {
+            let html = "";
+            for (let i = 0; i < 3; i++) {
+                try {
+                    const row = await contract.topPlayers(i);
+                    const addr = row[0];
+                    const score = row[1];
+                    const name = row[2];
+
+                    if (score > 0) {
+                        const displayName = name || `${addr.substring(0, 6)}...${addr.substring(38)}`;
+                        html += `
+                            <div class="rank-item">
+                                <span class="name">#${i + 1} ${displayName}</span>
+                                <span class="score">${score.toString()} PTS</span>
+                            </div>
+                        `;
+                    } else {
+                        html += `
+                            <div class="rank-item empty">
+                                <span class="name">#${i + 1} ---</span>
+                                <span class="score">0 PTS</span>
+                            </div>
+                        `;
+                    }
+                } catch (e) {
+                    html += `<div class="rank-item empty"><span class="name">#${i + 1} ---</span></div>`;
+                }
+            }
+            list.innerHTML = html;
+        } catch (err) {
+            console.error("Failed to update global monitor:", err);
         }
     }
 
