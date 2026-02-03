@@ -809,7 +809,11 @@ class Game {
             btnShare.onclick = async () => {
                 const text = `I just scored ${this.score} in $PEPECOIN ARCADE! 🐸🕹️\n\nCan you beat my high score? Play now at https://pepecoin-arcade.vercel.app #PEPECOIN #ARCADE #BASED`;
                 const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
-                const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
+                // Robust mobile/touch detection
+                const isTouch = ('ontouchstart' in window) ||
+                    (navigator.maxTouchPoints > 0) ||
+                    (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
                 // For touch devices, skip the laggy/glitchy screenshot and just share/redirect
                 if (isTouch) {
@@ -818,9 +822,10 @@ class Game {
                             await navigator.share({ text: text });
                             return;
                         } catch (e) {
-                            console.log('Share failed, opening via URL');
+                            console.log('Native share failed or cancelled');
                         }
                     }
+                    // Fallback to direct redirect for mobile
                     window.location.href = tweetUrl;
                     return;
                 }
