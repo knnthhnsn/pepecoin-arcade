@@ -1789,6 +1789,8 @@ input[type="checkbox"]:checked::after {
     z-index: 2000;
     padding: 30px;
     box-shadow: 0 0 30px rgba(255, 68, 68, 0.4);
+    pointer-events: auto;
+    /* Explicitly allow touch */
 }
 
 .intro-content {
@@ -1860,8 +1862,11 @@ input[type="checkbox"]:checked::after {
     border: 8px solid #111;
     border-radius: 4px;
     box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.5), 0 0 20px rgba(74, 222, 128, 0.2);
-    z-index: 10;
+    z-index: 5000;
+    /* Ensure it stays on top of the cabinet and room */
     transition: all 0.5s ease;
+    pointer-events: none;
+    /* Display only, don't block clicks to cabinet skins */
 }
 
 .monitor-screen {
@@ -1944,12 +1949,15 @@ input[type="checkbox"]:checked::after {
 
 @media (max-width: 900px) {
     .global-monitor {
-        top: auto;
+        top: 10px;
+        right: 10px;
         left: auto;
-        bottom: 20px;
-        right: 20px;
-        width: 160px;
+        bottom: auto;
+        width: 140px;
         border-width: 4px;
+        z-index: 6000;
+        /* Force it on top of cabinet marquee */
+        box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
     }
 
     .monitor-screen {
@@ -1961,6 +1969,10 @@ input[type="checkbox"]:checked::after {
         margin-bottom: 8px;
     }
 
+    .rank-list {
+        gap: 6px;
+    }
+
     .rank-item {
         font-size: 6px;
         padding-left: 5px;
@@ -1969,8 +1981,8 @@ input[type="checkbox"]:checked::after {
 
 @media (max-width: 600px) {
     .global-monitor {
-        bottom: 10px;
-        right: 10px;
-        width: 130px;
+        top: 5px;
+        right: 5px;
+        width: 120px;
     }
 }

@@ -1114,6 +1114,12 @@ class Game {
                     });
                 }
             };
+
+            // Explicit touch support for mobile
+            btnCloseIntro.ontouchstart = (e) => {
+                e.preventDefault();
+                btnCloseIntro.onclick();
+            };
         }
 
         // Initial pool check
@@ -1232,6 +1238,10 @@ class Game {
                 overlay.classList.add('hidden');
                 resolve(true);
             };
+            freeBtn.ontouchstart = (e) => {
+                e.preventDefault();
+                freeBtn.onclick();
+            };
 
             // Paid Path
             payBtn.onclick = async () => {
@@ -1272,6 +1282,10 @@ class Game {
                     payBtn.disabled = false;
                     payBtn.innerText = "PAY 100 $PEPE";
                 }
+            };
+            payBtn.ontouchstart = (e) => {
+                e.preventDefault();
+                payBtn.onclick();
             };
         });
     }
