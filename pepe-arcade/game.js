@@ -760,12 +760,17 @@ class Game {
         const coins = [desktopCoin, touchCoin].filter(c => c); // Filter out nulls
 
         const handleCoinInsert = (coin) => (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+            if (e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
 
             // Play coin insert animation
             coin.classList.add('inserting');
             this.audio.playTone(400, 'sine', 0.1); // Coin sound
+
+            // Remove Enter key listener
+            window.removeEventListener('keydown', enterKeyHandler);
 
             // Wait for animation then restart
             setTimeout(() => {
@@ -779,6 +784,14 @@ class Game {
                 document.getElementById('start-screen').classList.remove('active');
             }, 600);
         };
+
+        // Enter key support for desktop
+        const enterKeyHandler = (e) => {
+            if (e.code === 'Enter' && this.state === 'GAMEOVER' && desktopCoin) {
+                handleCoinInsert(desktopCoin)(null);
+            }
+        };
+        window.addEventListener('keydown', enterKeyHandler);
 
         // Activate coins and set up handlers
         coins.forEach(coin => {
