@@ -1158,28 +1158,21 @@ h1 {
 }
 
 /* Retry Coin Mechanism */
-.retry-coin-area {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.retry-coin-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-}
-
 .retry-coin {
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
-    animation: coinPulse 2s infinite ease-in-out;
     transition: transform 0.2s;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+}
+
+.retry-coin.active {
+    opacity: 1;
+    pointer-events: auto;
+    animation: coinPulse 2s infinite ease-in-out;
 }
 
 .retry-coin:hover {
@@ -1191,7 +1184,8 @@ h1 {
 }
 
 .retry-coin.inserting {
-    animation: coinInsert 0.6s ease-in forwards;
+    animation: coinInsert 0.6s ease-in forwards !important;
+    pointer-events: none;
 }
 
 @keyframes coinInsert {
@@ -1211,42 +1205,65 @@ h1 {
     }
 }
 
-.retry-coin-slot {
-    width: 50px;
-    height: 8px;
+/* Desktop Coin Slot in Control Panel */
+.control-panel-coin-slot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+    margin: 0 15px;
+}
+
+.coin-slot-hole {
+    width: 45px;
+    height: 10px;
     background: #000;
-    border: 2px solid #444;
-    border-radius: 4px;
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px rgba(74, 222, 128, 0.2);
+    border: 2px solid #555;
+    border-radius: 3px;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-/* Touch vs Desktop visibility */
-.desktop-only {
-    display: block;
+#desktop-retry-coin {
+    position: relative;
+    top: 0;
 }
 
-.touch-only {
+/* Touch Coin at Bottom Slot */
+.touch-retry-coin {
+    position: absolute;
+    top: -60px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 45px;
+    height: 45px;
+}
+
+/* Visibility: Desktop shows control panel coin, Touch shows bottom coin */
+.desktop-coin-slot {
+    display: flex;
+}
+
+.touch-retry-coin {
     display: none;
 }
 
-/* Touch device - show coin, hide "press any key" */
 @media (hover: none) and (pointer: coarse) {
-    .desktop-only {
+    .desktop-coin-slot {
         display: none;
     }
 
-    .touch-only {
-        display: flex;
+    .touch-retry-coin {
+        display: block;
     }
 }
 
-/* Also show coin on smaller screens as fallback */
 @media (max-width: 768px) {
-    .desktop-only {
+    .desktop-coin-slot {
         display: none;
     }
 
-    .touch-only {
-        display: flex;
+    .touch-retry-coin {
+        display: block;
     }
 }

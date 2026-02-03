@@ -44,15 +44,7 @@
                         <h1>GAME OVER</h1>
                         <p>FINAL SCORE: <span id="final-score">0</span></p>
                         <p class="best-score-label">BEST: <span id="best-score">0</span></p>
-                        <p class="retry-hint desktop-only">PRESS ANY KEY TO RETRY</p>
-                        <div class="retry-coin-area touch-only">
-                            <p>INSERT COIN TO RETRY</p>
-                            <div class="retry-coin-wrapper">
-                                <img src="./assets/coin/pepecoin.webp" id="retry-coin" class="retry-coin"
-                                    alt="Insert Coin">
-                                <div class="retry-coin-slot"></div>
-                            </div>
-                        </div>
+                        <p class="retry-hint">INSERT COIN TO RETRY</p>
                     </div>
                 </div>
 
@@ -76,6 +68,12 @@
                 </div>
             </div>
 
+            <!-- Coin Slot for Desktop Retry -->
+            <div class="control-panel-coin-slot desktop-coin-slot" id="desktop-coin-slot">
+                <img src="./assets/coin/pepecoin.webp" class="retry-coin" id="desktop-retry-coin" alt="Insert Coin">
+                <div class="coin-slot-hole"></div>
+            </div>
+
             <div class="joystick-area">
                 <div class="stick-base"></div>
                 <div class="stick-handle" id="joystick"></div>
@@ -87,7 +85,11 @@
 
         <!-- Coin Return / Front Panel Details -->
         <div class="cabinet-front-details">
-            <div class="coin-return"></div>
+            <div class="coin-return">
+                <!-- Retry Coin for Touch Devices -->
+                <img src="./assets/coin/pepecoin.webp" class="retry-coin touch-retry-coin" id="touch-retry-coin"
+                    alt="Insert Coin">
+            </div>
         </div>
     </div>
 

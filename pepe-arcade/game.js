@@ -757,33 +757,39 @@ class Game {
         document.getElementById('best-score').innerText = this.bestScore;
         document.getElementById('game-over-screen').classList.remove('hidden');
 
-        // Setup retry coin interaction
-        const retryCoin = document.getElementById('retry-coin');
-        if (retryCoin) {
-            retryCoin.classList.remove('inserting');
+        // Setup retry coin interaction for both desktop and touch coins
+        const desktopCoin = document.getElementById('desktop-retry-coin');
+        const touchCoin = document.getElementById('touch-retry-coin');
+        const coins = [desktopCoin, touchCoin].filter(c => c); // Filter out nulls
 
-            const handleCoinInsert = (e) => {
-                e.preventDefault();
-                e.stopPropagation();
+        const handleCoinInsert = (coin) => (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-                // Play coin insert animation
-                retryCoin.classList.add('inserting');
-                this.audio.playTone(400, 'sine', 0.1); // Coin sound
+            // Play coin insert animation
+            coin.classList.add('inserting');
+            this.audio.playTone(400, 'sine', 0.1); // Coin sound
 
-                // Wait for animation then restart
-                setTimeout(() => {
-                    document.getElementById('game-over-screen').classList.add('hidden');
-                    retryCoin.classList.remove('inserting');
-                    this.resetGame();
-                    this.state = 'PLAYING';
-                    document.getElementById('start-screen').classList.remove('active');
-                }, 600);
-            };
+            // Wait for animation then restart
+            setTimeout(() => {
+                document.getElementById('game-over-screen').classList.add('hidden');
+                coins.forEach(c => {
+                    c.classList.remove('inserting');
+                    c.classList.remove('active');
+                });
+                this.resetGame();
+                this.state = 'PLAYING';
+                document.getElementById('start-screen').classList.remove('active');
+            }, 600);
+        };
 
-            // Remove old listeners and add new ones
-            retryCoin.onclick = handleCoinInsert;
-            retryCoin.ontouchstart = handleCoinInsert;
-        }
+        // Activate coins and set up handlers
+        coins.forEach(coin => {
+            coin.classList.remove('inserting');
+            coin.classList.add('active');
+            coin.onclick = handleCoinInsert(coin);
+            coin.ontouchstart = handleCoinInsert(coin);
+        });
     }
 
     checkAABB(a, b) {
