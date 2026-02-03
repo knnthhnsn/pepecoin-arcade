@@ -862,6 +862,11 @@ h1 {
         flex-direction: row;
     }
 
+    /* Hide jump button on touch devices - use joystick up to jump */
+    .buttons-group .button-area:first-child {
+        display: none;
+    }
+
     .stick-base {
         width: 70px;
         height: 70px;
