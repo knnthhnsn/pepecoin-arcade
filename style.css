@@ -1793,24 +1793,13 @@ input[type="checkbox"]:checked::after {
     color: #ffd700 !important;
 }
 
-.prize-total {
-    color: #ffd700 !important;
-    font-size: 8px;
-}
-
-.prize-1st {
-    color: #ffd700 !important;
+.prize-line {
+    color: #fff;
     font-size: 7px;
 }
 
-.prize-2nd {
+.golden {
     color: #ffd700 !important;
-    font-size: 7px;
-}
-
-.prize-3rd {
-    color: #ffd700 !important;
-    font-size: 7px;
 }
 
 /* Intro Overlay */
