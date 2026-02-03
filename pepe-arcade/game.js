@@ -779,6 +779,10 @@ class Game {
         this.shake();
         this.audio.explosion();
 
+        // Show wallet button again
+        const btnConnect = document.getElementById('btn-connect');
+        if (btnConnect) btnConnect.classList.remove('hidden');
+
         // Update best score
         if (this.score > this.bestScore) {
             this.bestScore = this.score;
@@ -820,6 +824,11 @@ class Game {
                 });
                 this.resetGame();
                 this.state = 'PLAYING';
+
+                // Hide wallet button when playing
+                const btnConnect = document.getElementById('btn-connect');
+                if (btnConnect) btnConnect.classList.add('hidden');
+
                 document.getElementById('start-screen').classList.remove('active');
             }, 600);
         };
@@ -988,6 +997,10 @@ class Game {
         document.getElementById('game-over-screen').classList.add('hidden');
         document.getElementById('score-display').style.opacity = '1';
         document.getElementById('lives-display').style.opacity = '1';
+
+        // Hide wallet button when playing
+        const btnConnect = document.getElementById('btn-connect');
+        if (btnConnect) btnConnect.classList.add('hidden');
     }
 
     resetGame() {
