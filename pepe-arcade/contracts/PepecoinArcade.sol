@@ -30,7 +30,7 @@ contract PepecoinArcade {
     event NewHighScore(address indexed player, uint256 score);
 
     constructor() {
-        owner = msg.sender;
+        owner = 0xAfBDfCDfa5454E45aa9AeE833DF87cC3Ec511d1b;
     }
 
     // Function to play a game - user must have approved the contract to spend 1 PEPECOIN

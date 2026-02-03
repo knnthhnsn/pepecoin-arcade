@@ -1116,8 +1116,8 @@ class Game {
         if (!poolLabel) return;
 
         try {
-            // Read-only provider for public info
-            const pubProvider = new ethers.JsonRpcProvider("https://base-rpc.publicnode.com"); // Using Base as default
+            // Read-only provider for public info (Ethereum Mainnet)
+            const pubProvider = new ethers.JsonRpcProvider("https://eth.llamarpc.com");
             const pubContract = new ethers.Contract(ARCADE_CONTRACT, ARCADE_ABI, pubProvider);
 
             const count = await pubContract.gameCount();
