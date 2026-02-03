@@ -839,42 +839,44 @@ class Game {
                     link.click();
 
                     const text = `I just scored ${this.score} in $PEPECOIN ARCADE! 🐸🕹️\n\nCan you beat my high score? Play now at https://pepecoin-arcade.vercel.app #PEPECOIN #ARCADE #BASED`;
-                    const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+                    const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
 
-                    if (isTouch && navigator.share && navigator.canShare) {
-                        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-                        const file = new File([blob], `pepe-score-${this.score}.png`, { type: 'image/png' });
+                    // Try Native Share first (Mobile/Touch)
+                    if (navigator.share && navigator.canShare) {
+                        try {
+                            const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+                            const file = new File([blob], `pepe-score-${this.score}.png`, { type: 'image/png' });
 
-                        if (navigator.canShare({ files: [file] })) {
-                            try {
+                            if (navigator.canShare({ files: [file] })) {
                                 await navigator.share({
                                     text: text,
                                     files: [file]
                                 });
-                                return; // Success on mobile
-                            } catch (shareErr) {
-                                console.log('Native share cancelled or failed', shareErr);
+                                return; // Success!
                             }
-                        }
+                        } catch (e) { console.log('Native share failed, falling back...'); }
                     }
 
-                    // Desktop or Mobile Fallback
-                    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-
+                    // Fallback: Clipboard Copy + New Tab (Works for both Mobile and Desktop)
                     try {
+                        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
                         if (navigator.clipboard && window.ClipboardItem) {
                             const data = [new ClipboardItem({ 'image/png': blob })];
                             await navigator.clipboard.write(data);
                         }
-                    } catch (clipErr) {
-                        console.error('Clipboard failed:', clipErr);
+                    } catch (e) { console.error('Clip fail:', e); }
+
+                    // Force open the tweet URL
+                    // On mobile, this needs to be very direct to bypass blockers
+                    const xWindow = window.open(tweetUrl, '_blank');
+                    if (!xWindow) {
+                        // If blocked, use location.href as last resort
+                        window.location.href = tweetUrl;
+                    } else {
+                        setTimeout(() => {
+                            alert("Screenshot copied! Just press Paste to attach it to your post! 🐸📸✂️");
+                        }, 1000);
                     }
-
-                    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`, '_blank');
-
-                    setTimeout(() => {
-                        alert("Screenshot copied! Just press Paste (Ctrl+V) in your post to attach it! 🐸📸✂️");
-                    }, 1000);
                 } catch (err) {
                     console.error('Screenshot failed:', err);
                     alert("Capture failed, but you can still share your score!");
