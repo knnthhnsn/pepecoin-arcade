@@ -1083,7 +1083,16 @@ class Game {
         // Intro Overlay
         const btnCloseIntro = document.getElementById('btn-close-intro');
         if (btnCloseIntro) {
+            const handleIntroEnter = (e) => {
+                if (e.code === 'Enter') {
+                    e.preventDefault();
+                    btnCloseIntro.onclick();
+                }
+            };
+            window.addEventListener('keydown', handleIntroEnter);
+
             btnCloseIntro.onclick = () => {
+                window.removeEventListener('keydown', handleIntroEnter);
                 document.getElementById('intro-overlay').classList.add('hidden');
                 // Try to auto-connect if they have accounts
                 if (window.ethereum) {
@@ -1151,8 +1160,19 @@ class Game {
         overlay.classList.remove('hidden');
 
         return new Promise((resolve) => {
+            const handleOverlayEnter = (e) => {
+                if (e.code === 'Enter') {
+                    e.preventDefault();
+                    cleanup();
+                    freeBtn.onclick();
+                }
+            };
+            window.addEventListener('keydown', handleOverlayEnter);
+            const cleanup = () => window.removeEventListener('keydown', handleOverlayEnter);
+
             // Free Play Path - NO WALLET NEEDED
             freeBtn.onclick = () => {
+                cleanup();
                 this.isPaidSession = false;
                 overlay.classList.add('hidden');
                 resolve(true);
@@ -1184,11 +1204,13 @@ class Game {
 
                     this.updateJackpotStatus();
                     this.isPaidSession = true;
+                    cleanup();
                     overlay.classList.add('hidden');
                     resolve(true);
                 } catch (err) {
                     console.error("Payment failed:", err);
                     alert("Payment failed or cancelled.");
+                    cleanup();
                     overlay.classList.add('hidden');
                     resolve(false);
                 } finally {
