@@ -633,7 +633,6 @@ class Game {
     }
 
     shakeHearts() {
-        console.log("SHAKING HEARTS!");
         const hearts = document.querySelectorAll('.heart-icon');
         hearts.forEach(heart => {
             heart.classList.remove('shake');
@@ -642,7 +641,7 @@ class Game {
         });
         setTimeout(() => {
             hearts.forEach(h => h.classList.remove('shake'));
-        }, 600);
+        }, 400);
     }
 
     start() {
