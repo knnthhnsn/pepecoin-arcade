@@ -270,7 +270,7 @@ class InputHandler {
         if (code === 'ArrowUp' || code === 'KeyW') {
             isDown ? jumpBtn.classList.add('pressed') : jumpBtn.classList.remove('pressed');
         }
-        if (code === 'Space' || code === 'KeyB' || code === 'Click') {
+        if (code === 'Space' || code === 'Click') {
             isDown ? shootBtn.classList.add('pressed') : shootBtn.classList.remove('pressed');
         }
     }
@@ -484,7 +484,7 @@ class Player extends Entity {
         }
 
         if (this.shootTimer > 0) this.shootTimer--;
-        if ((this.game.input.isDown('Space') || this.game.input.isDown('KeyB') || this.game.input.isDown('Click')) && this.shootTimer === 0) {
+        if ((this.game.input.isDown('Space') || this.game.input.isDown('Click')) && this.shootTimer === 0) {
             if (this.game.audio && this.game.audio.shoot) this.game.audio.shoot();
             const dir = this.facingRight ? 1 : -1;
             const px = this.x + (this.facingRight ? this.width : 0) - 8;
