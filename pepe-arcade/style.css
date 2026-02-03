@@ -1605,17 +1605,13 @@ input[type="checkbox"]:checked::after {
 }
 
 .screenshot-mode .stick-handle {
-    transform: none !important;
+    transform: translate(-50%, -50%) !important;
     left: 50% !important;
     top: 50% !important;
-    margin: -55px 0 0 -55px !important;
+    margin: 0 !important;
 }
 
-@media screen and (max-width: 768px) {
-    .screenshot-mode .stick-handle {
-        margin: -30px 0 0 -30px !important;
-    }
-}
+
 
 .screenshot-mode .stick-handle::after {
     background: #ff4444 !important;
