@@ -1932,6 +1932,59 @@ input[type="checkbox"]:checked::after {
     }
 }
 
+/* Electrical Sparks */
+.spark {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    box-shadow: 0 0 10px 2px #4ade80, 0 0 20px 5px #fff;
+    z-index: 10;
+}
+
+.spark.s1 {
+    left: 4px;
+    top: -100px;
+    animation: spark-burst 5s infinite;
+}
+
+.spark.s2 {
+    left: 14px;
+    top: -250px;
+    animation: spark-burst 7s infinite 2s;
+}
+
+.spark.s3 {
+    left: 8px;
+    top: -400px;
+    animation: spark-burst 11s infinite 5s;
+}
+
+@keyframes spark-burst {
+
+    0%,
+    94%,
+    98%,
+    100% {
+        opacity: 0;
+        transform: scale(0);
+    }
+
+    95% {
+        opacity: 1;
+        transform: scale(1.5);
+        box-shadow: 0 0 15px 5px #4ade80, 0 0 30px 10px #fff;
+    }
+
+    97% {
+        opacity: 0.5;
+        transform: scale(0.5);
+    }
+}
+
 .monitor-screen {
     background: #000;
     padding: 15px;
