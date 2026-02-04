@@ -96,14 +96,20 @@ class AssetManager {
     queueImage(key, src) {
         this.toLoad++;
         const img = new Image();
-        img.src = src;
+
+        // Standard practice: set handlers BEFORE src
         img.onload = () => {
             this.loaded++;
             console.log(`Loaded asset: ${key}`);
         };
         img.onerror = (e) => {
-            console.error(`Failed to load asset: ${key} at ${src}`, e);
+            console.error(`Failed to load asset: ${key} at ${src}`);
         };
+
+        // Cache busting for fake_pepe to solve Vercel sync issues
+        const cacheBuster = (key === 'helicopter') ? `?v=${Date.now()}` : '';
+        img.src = src + cacheBuster;
+
         this.images[key] = img;
     }
 
