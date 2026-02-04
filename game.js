@@ -1296,10 +1296,17 @@ class Game {
             [desktopCoal, touchCoal, startCoal].forEach(el => {
                 if (el) {
                     saveHandlers.set(el, { click: el.onclick, touch: el.ontouchstart });
-                    // Bind to Free Play
+
+                    // Bind to Free Play - CLICK
                     el.onclick = (e) => {
                         if (e) { e.preventDefault(); e.stopPropagation(); }
-                        freeBtn.click(); // Trigger the free play logic defined above
+                        freeBtn.click();
+                    };
+
+                    // Bind to Free Play - TOUCH
+                    el.ontouchstart = (e) => {
+                        if (e) { e.preventDefault(); e.stopPropagation(); }
+                        freeBtn.click();
                     };
                 }
             });
@@ -1321,8 +1328,12 @@ class Game {
             // Paid Path
             payBtn.onclick = async () => {
                 // Disable shortcuts immediately to prevent race conditions
+                // Disable shortcuts immediately to prevent race conditions
                 saveHandlers.forEach((handlers, el) => {
-                    if (el) el.onclick = null; // Disable clicks during payment
+                    if (el) {
+                        el.onclick = null;
+                        el.ontouchstart = null;
+                    }
                 });
 
                 if (!this.isConnected) {
