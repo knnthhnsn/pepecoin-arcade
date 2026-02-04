@@ -1937,43 +1937,109 @@ input[type="checkbox"]:checked::after {
 .cabinet-wires-right {
     position: absolute;
     left: calc(100% + 40px);
-    /* Start exactly from the middle of the 80px side profile */
-    bottom: 30%;
-    /* Positioned for better side-profile visibility */
+    bottom: 25%;
     width: 1000px;
     height: 24px;
     background: linear-gradient(180deg, #600 0%, #b00 50%, #600 100%);
     border-top: 2px solid #400;
     border-bottom: 2px solid #400;
     box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
-    z-index: 0;
-    /* In front of the side art (::after -1) but behind front bezel (if clipped) */
-    transform: rotate(0.1deg);
+    z-index: 10;
+    /* Sag effect using transform and border-radius */
+    transform: rotate(0deg);
+    transform-origin: left center;
+    border-bottom-right-radius: 50% 100px;
     display: none;
 }
 
-/* 3D Power Socket Hub */
+/* 3D Power Socket Hub - Heavy Junction Box Style */
 .cabinet-socket {
     position: absolute;
-    left: -20px;
-    /* Recessed into the side */
-    top: -10px;
-    width: 30px;
-    height: 44px;
-    background: #080808;
+    left: -25px;
+    top: -15px;
+    width: 35px;
+    height: 55px;
+    background: #111;
     border: 3px solid #333;
     border-right-color: #555;
-    /* Highlight for 3D feel */
     border-bottom-color: #555;
-    border-radius: 4px;
+    border-radius: 6px;
     transform: skewY(60deg);
-    /* Crucial: Matches the 60deg side profile skew */
     box-shadow:
         inset 0 0 15px #000,
-        10px 10px 20px rgba(0, 0, 0, 0.8);
+        15px 15px 30px rgba(0, 0, 0, 0.9);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 10px;
+}
+
+/* Status LED synced with flares */
+.power-led {
+    width: 8px;
+    height: 8px;
+    background: #f00;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #f00, 0 0 20px #f00;
+    animation: led-flicker 0.1s infinite, monitor-power-surge 8s infinite;
+}
+
+@keyframes led-flicker {
+
+    0%,
+    100% {
+        opacity: 1;
+        filter: brightness(1.2);
+    }
+
+    50% {
+        opacity: 0.8;
+        filter: brightness(1);
+    }
+}
+
+/* Power Toggle Switch */
+.cabinet-power-switch {
+    position: absolute;
+    left: -20px;
+    top: 60px;
+    /* Below the socket */
+    width: 30px;
+    height: 40px;
+    background: #1a1a1a;
+    border: 2px solid #333;
+    border-radius: 4px;
+    transform: skewY(60deg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+    z-index: 20;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.switch-handle {
+    width: 14px;
+    height: 20px;
+    background: #444;
+    border: 2px solid #222;
+    border-radius: 2px;
+    transition: all 0.2s;
+}
+
+.cabinet-power-switch.off .switch-handle {
+    transform: translateY(10px);
+    background: #222;
+}
+
+.switch-label {
+    font-size: 5px;
+    color: #ffd700;
+    margin-top: 4px;
+    pointer-events: none;
 }
 
 /* Inner connection point */
@@ -2036,8 +2102,38 @@ input[type="checkbox"]:checked::after {
 
 .cabinet-wires-right .spark.s4 {
     left: 700px;
-    bottom: -10px;
+    bottom: -20px;
     animation: spark-burst 6s infinite 2s;
+}
+
+/* Global Power Off States */
+.arcade-cabinet.power-off .screen-container {
+    background: #000 !important;
+    box-shadow: none !important;
+}
+
+.arcade-cabinet.power-off .screen-container * {
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+.arcade-cabinet.power-off .marquee {
+    background: #111 !important;
+    box-shadow: none !important;
+}
+
+.arcade-cabinet.power-off .marquee-text {
+    opacity: 0 !important;
+}
+
+.arcade-cabinet.power-off .monitor-screen {
+    filter: brightness(0.1) contrast(2);
+}
+
+.cabinet-power-switch.off+.cabinet-socket .power-led {
+    background: #200 !important;
+    box-shadow: none !important;
+    animation: none !important;
 }
 
 /* Electrical Sparks */

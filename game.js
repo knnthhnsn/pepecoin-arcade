@@ -1353,6 +1353,7 @@ window.onload = () => {
     canvas.width = 800;
     canvas.height = 600;
     const game = new Game(ctx, canvas.width, canvas.height);
+    window.gameInstance = game;
     game.start();
 
     const nftStickers = ['nft0.png', 'nft1.png', 'nft2.png', 'nft3.png', 'nft4.png', 'nft5.png', 'nft6.png'];
@@ -1427,4 +1428,18 @@ window.onload = () => {
 
         createSticker(cabinetContainer, s, leftBase + Math.random() * 4, 10 + (i * 12) + (Math.random() * 4 - 2), scale, (Math.random() * 40 - 20), false);
     });
+    // Power Switch Logic
+    const pwrSwitch = document.getElementById('cabinet-toggle-switch');
+    const cabinet = document.querySelector('.arcade-cabinet');
+    if (pwrSwitch && cabinet) {
+        pwrSwitch.onclick = () => {
+            pwrSwitch.classList.toggle('off');
+            cabinet.classList.toggle('power-off');
+
+            // Audio feedback for hardware switch
+            if (window.gameInstance && window.gameInstance.audio) {
+                window.gameInstance.audio.playTone(80, 'square', 0.05);
+            }
+        };
+    }
 };
