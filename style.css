@@ -1932,6 +1932,63 @@ input[type="checkbox"]:checked::after {
     }
 }
 
+/* Cabinet Side Wires (Right) */
+.cabinet-wires-right {
+    position: absolute;
+    left: calc(100% - 15px);
+    top: 15%;
+    width: 1000px;
+    height: 10px;
+    background: linear-gradient(180deg, #0d0d0d 0%, #222 50%, #0d0d0d 100%);
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+    z-index: -2;
+    transform: rotate(1deg);
+    display: none;
+}
+
+/* Thinner Secondary Wire */
+.cabinet-wires-right::after {
+    content: "";
+    position: absolute;
+    top: 18px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: #0a0a0a;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.cabinet-wires-right::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(90deg, transparent, transparent 4px, rgba(0, 0, 0, 0.5) 5px);
+    pointer-events: none;
+}
+
+@media (min-width: 1400px) {
+    .cabinet-wires-right {
+        display: block;
+    }
+}
+
+.cabinet-wires-right .spark.s1 {
+    left: 50px;
+    top: -2px;
+    animation: spark-burst 4s infinite 1.2s;
+}
+
+.cabinet-wires-right .spark.s2 {
+    left: 200px;
+    bottom: -2px;
+    animation: spark-burst 7s infinite 3.5s;
+}
+
 /* Electrical Sparks */
 .spark {
     position: absolute;
