@@ -914,24 +914,33 @@ class Game {
         // Share logic
         const btnShare = document.getElementById('btn-share');
         if (btnShare) {
-            btnShare.onclick = (e) => {
-                e.preventDefault();
+            const handleShare = (e) => {
+                if (e) e.preventDefault();
                 this.shareScore();
             };
+            btnShare.onclick = handleShare;
+            btnShare.ontouchstart = handleShare;
         }
     }
 
-    async shareScore() {
+    shareScore() {
         if (this.shareInProgress) return;
         this.shareInProgress = true;
 
         const text = `I just scored ${this.score} in $PEPECOIN ARCADE! 🐸🕹️\n\nCan you beat my high score? Play now at https://pepecoin-arcade.vercel.app #PEPECOIN #ARCADE #BASED`;
         const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
 
-        // Open X sharing intent
-        window.open(tweetUrl, '_blank');
+        // synchronous open is more reliable for popup blockers
+        const win = window.open(tweetUrl, '_blank');
 
-        this.shareInProgress = false;
+        // If popup blocked or mobile, fallback to same-window redirect
+        if (!win || win.closed || typeof win.closed == 'undefined') {
+            window.location.href = tweetUrl;
+        }
+
+        setTimeout(() => {
+            this.shareInProgress = false;
+        }, 1000);
     }
 
     checkAABB(a, b) {
