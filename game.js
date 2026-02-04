@@ -97,7 +97,7 @@ class AssetManager {
         this.toLoad++;
         const img = new Image();
 
-        // Standard practice: set handlers BEFORE src
+
         img.onload = () => {
             this.loaded++;
             console.log(`Loaded asset: ${key}`);
@@ -106,9 +106,7 @@ class AssetManager {
             console.error(`Failed to load asset: ${key} at ${src}`);
         };
 
-        // Cache busting for fake_pepe to solve Vercel sync issues
-        const cacheBuster = (key === 'helicopter') ? `?v=${Date.now()}` : '';
-        img.src = src + cacheBuster;
+        img.src = src;
 
         this.images[key] = img;
     }
@@ -634,7 +632,7 @@ class Game {
         this.assets.queueImage('player_walk2', './assets/pepe_frame_foot_walk_2.png');
         this.assets.queueImage('projectile', './assets/projectile.png');
         this.assets.queueImage('impact', './assets/impact_effect.png');
-        this.assets.queueImage('helicopter', './assets/fake_pepe.png');
+        this.assets.queueImage('helicopter', './assets/mob.png');
 
         this.bgKeys = ['bg1', 'bg2', 'bg3', 'bg4'];
         this.assets.queueImage('bg1', './assets/Backgrounds/community-art2.avif');
