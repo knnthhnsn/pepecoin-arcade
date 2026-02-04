@@ -914,14 +914,7 @@ class Game {
             (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
 
         if (isMobileDevice) {
-            console.log("Mobile share triggered");
-            if (navigator.share) {
-                try {
-                    await navigator.share({ text: text });
-                    this.shareInProgress = false;
-                    return;
-                } catch (e) { /* Fallback */ }
-            }
+            console.log("Mobile share via X triggered");
             window.location.href = tweetUrl;
             this.shareInProgress = false;
             return;
