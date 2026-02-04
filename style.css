@@ -1035,23 +1035,26 @@ h1 {
     }
 }
 
-/* Wall Sticker Layer - Background */
+/* Wall Sticker Layer - Background (v1.96 Consolidated) */
 #wall-sticker-container {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
+    /* Let clicks pass to cabinet */
     z-index: 1;
-    /* Above background, below cabinet */
+    /* Above room background, but below cabinet (10) */
     overflow: visible;
-    display: none;
+    display: block;
+    /* Visible by default on desktop */
 }
 
-@media (min-width: 900px) {
+@media (max-width: 900px) {
     #wall-sticker-container {
-        display: block;
+        display: none;
+        /* Hide on small screens to reduce clutter */
     }
 }
 
@@ -1076,6 +1079,9 @@ h1 {
     cursor: pointer !important;
     transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 6;
+    width: 150px;
+    /* Base width for wall NFTs */
+    height: auto;
 }
 
 .wall-sticker-wrapper:hover {
@@ -1105,22 +1111,17 @@ h1 {
     filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.5)) brightness(1.1);
 }
 
-/* Obsolete sticker styles removed in v1.95 cleanup */
-
-/* Wall Sticker Layer - Background */
-#wall-sticker-container {
-    position: fixed;
-    top: 0;
-    left: 0;
+/* Sticker content layout (v1.96) */
+.sticker-content {
+    position: relative;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    /* Let clicks pass to cabinet */
-    z-index: 5;
-    /* Above room background, but below cabinet (10) */
-    overflow: visible;
-    display: none;
+    display: block;
 }
+
+/* Obsolete sticker styles removed in v1.95 cleanup */
+
+/* Obsolete redundant container definition removed in v1.96 */
 
 /* Holographic Shine Effect for ALL Stickers */
 .sticker-content::after {
