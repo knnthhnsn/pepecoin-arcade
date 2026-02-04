@@ -1956,12 +1956,12 @@ input[type="checkbox"]:checked::after {
     /* Overlap the socket completely */
     width: calc(100% + 15px);
     height: 100%;
-    /* Gradient shadow toward the cabinet + Metallic Red Texture */
+    /* Gradient shadow toward the cabinet + Metallic Red Texture + Outer rounding shadows */
     background:
         linear-gradient(90deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.7) 8%, transparent 25%),
-        linear-gradient(180deg, #600 0%, #b00 50%, #600 100%);
-    border-top: 2px solid #400;
-    border-bottom: 2px solid #400;
+        linear-gradient(180deg, #200 0%, #b00 50%, #200 100%);
+    border-top: 1px solid #100;
+    border-bottom: 1px solid #100;
     box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
     z-index: 50;
     /* Definitively in front of socket (20) */
@@ -1981,16 +1981,19 @@ input[type="checkbox"]:checked::after {
     display: block !important;
 }
 
-/* Thinner Secondary Wire Re-integrated as ::after */
+/* Thinner Secondary Wire with its own rounded lighting and connection shadow */
 .cabinet-wires-right::after {
     content: "";
     position: absolute;
     top: 35px;
-    left: 0;
-    width: 100%;
+    left: -10px;
+    /* Also extend slightly further into the machine line */
+    width: calc(100% + 10px);
     height: 8px;
-    background: #400;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.98) 0%, rgba(0, 0, 0, 0.8) 12%, transparent 35%),
+        linear-gradient(180deg, #100 0%, #600 50%, #100 100%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
     z-index: 49;
     /* Slightly behind main wire but in front of socket */
 }
