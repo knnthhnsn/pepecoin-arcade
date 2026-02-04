@@ -1944,8 +1944,8 @@ input[type="checkbox"]:checked::after {
     border-top: 2px solid #400;
     border-bottom: 2px solid #400;
     box-shadow: 0 8px 25px rgba(255, 0, 0, 0.4);
-    z-index: 0;
-    /* Behind front but in front of wall (-3) */
+    z-index: 30;
+    /* Moved in front of the socket (z-20) */
     transform: rotate(0.1deg);
     display: none;
     /* Allow wires to extend slightly behind the socket hub for seamless entry */
