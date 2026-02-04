@@ -1123,8 +1123,41 @@ h1 {
     transition: filter 0.2s;
 }
 
+
+
 .wall-sticker-wrapper:hover .wall-sticker {
     filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.5)) brightness(1.1);
+}
+
+/* Kekspace Graffiti (Top Right) - v1.101 */
+.kekspace-graffiti {
+    position: fixed;
+    top: 5lh;
+    right: 5vw;
+    z-index: 2;
+    /* Behind cabinet (10) but above wall (1) */
+    pointer-events: none;
+    display: none;
+    /* Hidden on small screens */
+    opacity: 0.85;
+    /* Slight transparency for paint effect */
+    mix-blend-mode: multiply;
+    /* Blend with concrete wall */
+    transform: rotate(5deg);
+    filter: sepia(0.2) contrast(1.1) drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.kekspace-graffiti img {
+    width: 300px;
+    height: auto;
+    display: block;
+}
+
+/* Show only on wider screens */
+@media (min-width: 1200px) {
+    .kekspace-graffiti {
+        display: block;
+    }
 }
 
 /* Sticker content layout (v1.96) */
