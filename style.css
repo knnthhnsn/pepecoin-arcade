@@ -1134,8 +1134,8 @@ h1 {
     position: fixed;
     top: 5lh;
     right: 5vw;
-    z-index: 2;
-    /* Behind cabinet (10) but above wall (1) */
+    z-index: 0;
+    /* Behind everything including wall stickers (1) */
     pointer-events: none;
     display: none;
     /* Hidden on small screens */
