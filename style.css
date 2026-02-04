@@ -67,7 +67,32 @@ body {
     box-shadow: inset 10px 0 80px rgba(0, 0, 0, 1);
 }
 
-/* Old sticker styles removed in v1.94 cleanup */
+/* Restored Tape Styles (v1.97) */
+.tape {
+    position: absolute;
+    width: 25px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    top: -3px;
+    left: 50%;
+    transform: translateX(-50%) rotate(2deg);
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.tape.tape-tl {
+    top: -5px;
+    left: 10px;
+    transform: rotate(135deg);
+}
+
+.tape.tape-tr {
+    top: -5px;
+    right: 10px;
+    left: auto;
+    transform: rotate(45deg);
+}
 
 .tape {
     position: absolute;
@@ -627,16 +652,7 @@ h1 {
     }
 }
 
-.wall-sticker-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 1;
-    /* Behind cabinet (z-index: 10) */
-}
+/* Old wall-sticker-layer removed to prevent conflicts (v1.97) */
 
 .wall-sticker-wrapper {
     position: absolute;
@@ -1035,7 +1051,7 @@ h1 {
     }
 }
 
-/* Wall Sticker Layer - Background (v1.96 Consolidated) */
+/* Wall Sticker Layer - Background (v1.97 Consolidated) */
 #wall-sticker-container {
     position: fixed;
     top: 0;
@@ -1047,8 +1063,8 @@ h1 {
     z-index: 1;
     /* Above room background, but below cabinet (10) */
     overflow: visible;
-    display: block;
-    /* Visible by default on desktop */
+    display: block !important;
+    /* Force visibility */
 }
 
 @media (max-width: 900px) {
