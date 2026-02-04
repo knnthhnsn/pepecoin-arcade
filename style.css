@@ -1947,20 +1947,20 @@ input[type="checkbox"]:checked::after {
 
 .spark.s1 {
     left: 4px;
-    top: -100px;
-    animation: spark-burst 5s infinite;
+    bottom: 10px;
+    animation: spark-burst 3s infinite;
 }
 
 .spark.s2 {
     left: 14px;
-    top: -250px;
-    animation: spark-burst 7s infinite 2s;
+    bottom: 30px;
+    animation: spark-burst 4.5s infinite 1s;
 }
 
 .spark.s3 {
     left: 8px;
-    top: -400px;
-    animation: spark-burst 11s infinite 5s;
+    bottom: 50px;
+    animation: spark-burst 6s infinite 2.5s;
 }
 
 @keyframes spark-burst {
@@ -1975,13 +1975,14 @@ input[type="checkbox"]:checked::after {
 
     95% {
         opacity: 1;
-        transform: scale(1.5);
-        box-shadow: 0 0 15px 5px #4ade80, 0 0 30px 10px #fff;
+        transform: scale(2);
+        /* Larger spark */
+        box-shadow: 0 0 20px 8px #4ade80, 0 0 40px 15px #fff;
     }
 
     97% {
         opacity: 0.5;
-        transform: scale(0.5);
+        transform: scale(0.8);
     }
 }
 
