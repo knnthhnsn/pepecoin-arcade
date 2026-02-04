@@ -1401,33 +1401,19 @@ window.onload = () => {
         targetContainer.appendChild(wrapper);
     };
 
-    // Scatter NFTs on the walls
     // Scatter NFTs on the walls - strict positioning to avoid cabinet overlap
-    // Cabinet occupies roughly center 50% on wide screens, so keep stickers in outer 20%
     nftStickers.forEach((s, i) => {
         const isLeft = i % 2 === 0;
-        // Left side: 2% to 18% width
-        // Right side: 82% to 95% width
         const x = isLeft ? (2 + Math.random() * 16) : (82 + Math.random() * 13);
-        const y = 5 + Math.random() * 80; // Spread vertically
+        const y = 5 + Math.random() * 80;
         createSticker(wallContainer, s, x, y, 0.9, (Math.random() * 30 - 15), true);
     });
 
-    // Regular stickers stay on the cabinet
-    const moveLeftList = ['basedman-white-eye.png', 'basedman.png', 'basedman1.png', 'basedman2.png', 'brain-logo.webp', 'heart.png', 'Jockstrap.png'];
-    regularStickers.forEach((s, i) => {
-        if (i > 7) return;
-        const isLeft = i % 2 === 0;
-        let leftBase = isLeft ? 2 : 92;
-        let scale = 0.6;
+    // Cabinet stickers removed in v1.95 as requested
+    const stickerLayer = document.querySelector('.sticker-layer');
+    if (stickerLayer) stickerLayer.remove();
 
-        if (moveLeftList.includes(s)) {
-            leftBase -= 4.5;
-            scale = 0.7;
-        }
-
-        createSticker(cabinetContainer, s, leftBase + Math.random() * 4, 10 + (i * 12) + (Math.random() * 4 - 2), scale, (Math.random() * 40 - 20), false);
-    });
+    /* Regular stickers loop removed */
     // Power Switch Logic
     const pwrSwitch = document.getElementById('cabinet-toggle-switch');
     const cabinet = document.querySelector('.arcade-cabinet');

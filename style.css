@@ -1069,20 +1069,20 @@ h1 {
 }
 
 /* Base Sticker Wrapper Logic with High Interaction Priority */
-.wall-sticker-wrapper,
-.sticker-wrapper {
+.wall-sticker-wrapper {
     position: absolute;
     pointer-events: auto !important;
+    /* Force clickability */
     cursor: pointer !important;
     transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 6;
 }
 
-.wall-sticker-wrapper {
-    z-index: 2;
-}
-
-.sticker-wrapper {
-    z-index: 41;
+.wall-sticker-wrapper:hover {
+    transform: scale(1.1) rotate(0deg) !important;
+    z-index: 2000 !important;
+    /* Pop to extreme front on hover */
+    filter: brightness(1.2) drop-shadow(0 0 20px rgba(255, 255, 255, 0.6));
 }
 
 .wall-sticker-wrapper:hover,
@@ -1092,37 +1092,34 @@ h1 {
     filter: brightness(1.2) drop-shadow(0 0 15px rgba(255, 255, 255, 0.5));
 }
 
-/* Shared Sticker Content logic (v1.94) */
-.sticker-content {
-    position: relative;
+/* Consistently styled NFT Wall Stickers */
+.wall-sticker {
     width: 100%;
-    height: 100%;
-    display: block;
-}
-
-.wall-sticker,
-.sticker {
-    width: 100%;
-    /* Fill wrapper width */
     height: auto;
     display: block;
-    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(2px 5px 8px rgba(0, 0, 0, 0.6));
+    transition: filter 0.2s;
 }
 
-.wall-sticker-wrapper:hover .wall-sticker,
-.sticker-wrapper:hover .sticker {
-    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+.wall-sticker-wrapper:hover .wall-sticker {
+    filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.5)) brightness(1.1);
 }
 
-.sticker-layer {
-    display: block !important;
-    /* Ensure cabinet stickers can show */
-    position: absolute;
+/* Obsolete sticker styles removed in v1.95 cleanup */
+
+/* Wall Sticker Layer - Background */
+#wall-sticker-container {
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
+    /* Let clicks pass to cabinet */
+    z-index: 5;
+    /* Above room background, but below cabinet (10) */
+    overflow: visible;
+    display: none;
 }
 
 /* Holographic Shine Effect for ALL Stickers */
