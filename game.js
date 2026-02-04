@@ -1273,7 +1273,7 @@ class Game {
                 }
             };
             window.addEventListener('keydown', handleOverlayEnter);
-            const cleanup = () => window.removeEventListener('keydown', handleOverlayEnter);
+            let cleanup = () => window.removeEventListener('keydown', handleOverlayEnter);
 
             // Free Play Path - NO WALLET NEEDED
             freeBtn.onclick = () => {
@@ -1287,11 +1287,51 @@ class Game {
                 freeBtn.onclick();
             };
 
+            // Coal shortcuts for Free Play
+            const desktopCoal = document.getElementById('desktop-retry-coin');
+            const touchCoal = document.getElementById('touch-retry-coin');
+            const startCoal = document.getElementById('pepe-coin');
+
+            const saveHandlers = new Map();
+            [desktopCoal, touchCoal, startCoal].forEach(el => {
+                if (el) {
+                    saveHandlers.set(el, { click: el.onclick, touch: el.ontouchstart });
+                    // Bind to Free Play
+                    el.onclick = (e) => {
+                        if (e) { e.preventDefault(); e.stopPropagation(); }
+                        freeBtn.click(); // Trigger the free play logic defined above
+                    };
+                }
+            });
+
+            // Enhanced cleanup
+            const originalCleanup = cleanup;
+            cleanup = () => {
+                originalCleanup();
+                // Restore original handlers
+                window.removeEventListener('keydown', handleOverlayEnter); // Redundant ensuring
+                saveHandlers.forEach((handlers, el) => {
+                    if (el) {
+                        el.onclick = handlers.click;
+                        el.ontouchstart = handlers.touch;
+                    }
+                });
+            };
+
             // Paid Path
             payBtn.onclick = async () => {
+                // Disable shortcuts immediately to prevent race conditions
+                saveHandlers.forEach((handlers, el) => {
+                    if (el) el.onclick = null; // Disable clicks during payment
+                });
+
                 if (!this.isConnected) {
                     await this.connectWallet();
-                    if (!this.isConnected) return; // Cancelled
+                    if (!this.isConnected) {
+                        // Restore if connection failed
+                        cleanup(); // Will restore handlers via updated cleanup
+                        return;
+                    }
                 }
 
                 payBtn.disabled = true;
