@@ -1,4 +1,4 @@
-const { ethers } = require('ethers');
+import { ethers } from 'ethers';
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
